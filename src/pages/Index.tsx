@@ -51,35 +51,104 @@ const Index = () => {
           </Button>
         </section>
 
-        <section className="grid md:grid-cols-3 gap-8 py-20 animate-slide-up">
-          <div className="p-8 rounded-xl border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-white" />
+        <section className="grid md:grid-cols-3 gap-8 py-20 animate-slide-up" style={{ perspective: '1000px' }}>
+          <div className="group relative" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="relative p-8 rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl" 
+                 style={{ 
+                   transform: 'rotateX(0deg) rotateY(0deg)',
+                   transition: 'transform 0.5s ease-out, box-shadow 0.3s ease-out'
+                 }}
+                 onMouseMove={(e) => {
+                   const card = e.currentTarget;
+                   const rect = card.getBoundingClientRect();
+                   const x = e.clientX - rect.left;
+                   const y = e.clientY - rect.top;
+                   const centerX = rect.width / 2;
+                   const centerY = rect.height / 2;
+                   const rotateX = (y - centerY) / 10;
+                   const rotateY = (centerX - x) / 10;
+                   card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                 }}>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 shadow-glow group-hover:scale-110 transition-transform duration-300" 
+                     style={{ transform: 'translateZ(50px)' }}>
+                  <Zap className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Drag & Drop Kanban</h3>
+                <p className="text-muted-foreground">
+                  Organize tasks visually with an intuitive drag-and-drop interface across To Do, In Progress, and Completed columns
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Drag & Drop Kanban</h3>
-            <p className="text-muted-foreground">
-              Organize tasks visually with an intuitive drag-and-drop interface across To Do, In Progress, and Completed columns
-            </p>
           </div>
 
-          <div className="p-8 rounded-xl border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-lg bg-gradient-accent flex items-center justify-center mb-4">
-              <BarChart3 className="h-6 w-6 text-white" />
+          <div className="group relative" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="relative p-8 rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl"
+                 style={{ 
+                   transform: 'rotateX(0deg) rotateY(0deg)',
+                   transition: 'transform 0.5s ease-out, box-shadow 0.3s ease-out'
+                 }}
+                 onMouseMove={(e) => {
+                   const card = e.currentTarget;
+                   const rect = card.getBoundingClientRect();
+                   const x = e.clientX - rect.left;
+                   const y = e.clientY - rect.top;
+                   const centerX = rect.width / 2;
+                   const centerY = rect.height / 2;
+                   const rotateX = (y - centerY) / 10;
+                   const rotateY = (centerX - x) / 10;
+                   card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                 }}>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-accent flex items-center justify-center mb-6 shadow-glow group-hover:scale-110 transition-transform duration-300"
+                     style={{ transform: 'translateZ(50px)' }}>
+                  <BarChart3 className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Smart Analytics</h3>
+                <p className="text-muted-foreground">
+                  Track your productivity with visual charts and insights. Monitor completion rates and task distribution
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Smart Analytics</h3>
-            <p className="text-muted-foreground">
-              Track your productivity with visual charts and insights. Monitor completion rates and task distribution
-            </p>
           </div>
 
-          <div className="p-8 rounded-xl border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-lg bg-gradient-success flex items-center justify-center mb-4">
-              <Shield className="h-6 w-6 text-white" />
+          <div className="group relative" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="relative p-8 rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl"
+                 style={{ 
+                   transform: 'rotateX(0deg) rotateY(0deg)',
+                   transition: 'transform 0.5s ease-out, box-shadow 0.3s ease-out'
+                 }}
+                 onMouseMove={(e) => {
+                   const card = e.currentTarget;
+                   const rect = card.getBoundingClientRect();
+                   const x = e.clientX - rect.left;
+                   const y = e.clientY - rect.top;
+                   const centerX = rect.width / 2;
+                   const centerY = rect.height / 2;
+                   const rotateX = (y - centerY) / 10;
+                   const rotateY = (centerX - x) / 10;
+                   card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                 }}>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-success flex items-center justify-center mb-6 shadow-glow group-hover:scale-110 transition-transform duration-300"
+                     style={{ transform: 'translateZ(50px)' }}>
+                  <Shield className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Priority Management</h3>
+                <p className="text-muted-foreground">
+                  Set priorities and deadlines for tasks. Never miss important deadlines with our smart priority system
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Priority Management</h3>
-            <p className="text-muted-foreground">
-              Set priorities and deadlines for tasks. Never miss important deadlines with our smart priority system
-            </p>
           </div>
         </section>
 
