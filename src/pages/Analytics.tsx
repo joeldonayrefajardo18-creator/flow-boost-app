@@ -33,11 +33,13 @@ const Analytics = () => {
     'hsl(280, 67%, 50%)',  // Violet
   ];
 
-  const statusData = columns.map((column, index) => ({
-    name: column.title,
-    value: tasks.filter(t => t.status === column.id).length,
-    fill: distinctColors[index % distinctColors.length],
-  }));
+  const statusData = columns
+    .map((column, index) => ({
+      name: column.title,
+      value: tasks.filter(t => t.status === column.id).length,
+      fill: distinctColors[index % distinctColors.length],
+    }))
+    .filter(data => data.value > 0); // Only show columns with tasks
 
   const priorityData = [
     { name: 'High', count: tasks.filter(t => t.priority === 'high').length, fill: 'hsl(var(--destructive))' },
