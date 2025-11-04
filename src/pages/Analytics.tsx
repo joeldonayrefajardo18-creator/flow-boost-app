@@ -1,17 +1,34 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { useTasks } from '@/contexts/TaskContext';
+import { useColumns } from '@/contexts/ColumnContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
 const Analytics = () => {
   const { tasks } = useTasks();
+  const { columns } = useColumns();
 
-  const statusData = [
-    { name: 'To Do', value: tasks.filter(t => t.status === 'todo').length, fill: 'hsl(var(--muted))' },
-    { name: 'In Progress', value: tasks.filter(t => t.status === 'in-progress').length, fill: 'hsl(var(--warning))' },
-    { name: 'Completed', value: tasks.filter(t => t.status === 'completed').length, fill: 'hsl(var(--success))' },
-  ];
+  // Map column colors to HSL values
+  const getColorValue = (colorClass: string) => {
+    const colorMap: Record<string, string> = {
+      'bg-muted': 'hsl(var(--muted))',
+      'bg-primary/10': 'hsl(var(--primary))',
+      'bg-warning/10': 'hsl(var(--warning))',
+      'bg-success/10': 'hsl(var(--success))',
+      'bg-destructive/10': 'hsl(var(--destructive))',
+      'bg-blue-500/10': 'hsl(217, 91%, 60%)',
+      'bg-purple-500/10': 'hsl(271, 81%, 56%)',
+      'bg-pink-500/10': 'hsl(330, 81%, 60%)',
+    };
+    return colorMap[colorClass] || 'hsl(var(--primary))';
+  };
+
+  const statusData = columns.map(column => ({
+    name: column.title,
+    value: tasks.filter(t => t.status === column.id).length,
+    fill: getColorValue(column.color),
+  }));
 
   const priorityData = [
     { name: 'High', count: tasks.filter(t => t.priority === 'high').length, fill: 'hsl(var(--destructive))' },
@@ -19,9 +36,19 @@ const Analytics = () => {
     { name: 'Low', count: tasks.filter(t => t.priority === 'low').length, fill: 'hsl(var(--success))' },
   ];
 
-  const completionRate = tasks.length > 0
-    ? Math.round((tasks.filter(t => t.status === 'completed').length / tasks.length) * 100)
+  // Find completed column (usually the last one, or one with "completed" in name)
+  const completedColumn = columns.find(c => 
+    c.title.toLowerCase().includes('completed') || 
+    c.title.toLowerCase().includes('done')
+  ) || columns[columns.length - 1];
+
+  const completionRate = tasks.length > 0 && completedColumn
+    ? Math.round((tasks.filter(t => t.status === completedColumn.id).length / tasks.length) * 100)
     : 0;
+
+  const activeTasks = completedColumn 
+    ? tasks.filter(t => t.status !== completedColumn.id).length
+    : tasks.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,9 +80,7 @@ const Analytics = () => {
           <Card>
             <CardHeader>
               <CardDescription>Active Tasks</CardDescription>
-              <CardTitle className="text-4xl">
-                {tasks.filter(t => t.status !== 'completed').length}
-              </CardTitle>
+              <CardTitle className="text-4xl">{activeTasks}</CardTitle>
             </CardHeader>
           </Card>
         </div>
