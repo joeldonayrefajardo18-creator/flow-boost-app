@@ -1,8 +1,9 @@
-import { Task, User } from '@/types/task';
+import { Task, User, Column } from '@/types/task';
 
 const TASKS_KEY = 'taskflow_tasks';
 const USER_KEY = 'taskflow_user';
 const THEME_KEY = 'taskflow_theme';
+const COLUMNS_KEY = 'taskflow_columns';
 
 export const storage = {
   // Tasks
@@ -36,5 +37,15 @@ export const storage = {
 
   saveTheme: (theme: 'light' | 'dark'): void => {
     localStorage.setItem(THEME_KEY, theme);
+  },
+
+  // Columns
+  getColumns: (): Column[] => {
+    const columns = localStorage.getItem(COLUMNS_KEY);
+    return columns ? JSON.parse(columns) : [];
+  },
+
+  saveColumns: (columns: Column[]): void => {
+    localStorage.setItem(COLUMNS_KEY, JSON.stringify(columns));
   },
 };

@@ -1,5 +1,12 @@
-export type TaskStatus = 'todo' | 'in-progress' | 'completed';
+export type TaskStatus = string;
 export type TaskPriority = 'low' | 'medium' | 'high';
+
+export interface Column {
+  id: string;
+  title: string;
+  color: string;
+  order: number;
+}
 
 export interface Task {
   id: string;

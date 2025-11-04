@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useTasks } from '@/contexts/TaskContext';
+import { useColumns } from '@/contexts/ColumnContext';
 
 interface TaskDialogProps {
   open: boolean;
@@ -28,12 +29,13 @@ interface TaskDialogProps {
   defaultStatus?: TaskStatus;
 }
 
-export const TaskDialog = ({ open, onOpenChange, task, defaultStatus = 'todo' }: TaskDialogProps) => {
+export const TaskDialog = ({ open, onOpenChange, task, defaultStatus }: TaskDialogProps) => {
   const { addTask, updateTask } = useTasks();
+  const { columns } = useColumns();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    status: defaultStatus as TaskStatus,
+    status: defaultStatus || (columns.length > 0 ? columns[0].id : ''),
     priority: 'medium' as TaskPriority,
     deadline: '',
   });
@@ -51,12 +53,12 @@ export const TaskDialog = ({ open, onOpenChange, task, defaultStatus = 'todo' }:
       setFormData({
         title: '',
         description: '',
-        status: defaultStatus,
+        status: defaultStatus || (columns.length > 0 ? columns[0].id : ''),
         priority: 'medium',
         deadline: '',
       });
     }
-  }, [task, defaultStatus, open]);
+  }, [task, defaultStatus, open, columns]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,9 +117,11 @@ export const TaskDialog = ({ open, onOpenChange, task, defaultStatus = 'todo' }:
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todo">To Do</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
+                    {columns.map((column) => (
+                      <SelectItem key={column.id} value={column.id}>
+                        {column.title}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
