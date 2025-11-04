@@ -9,25 +9,34 @@ const Analytics = () => {
   const { tasks } = useTasks();
   const { columns } = useColumns();
 
-  // Map column colors to HSL values
-  const getColorValue = (colorClass: string) => {
-    const colorMap: Record<string, string> = {
-      'bg-muted': 'hsl(var(--muted))',
-      'bg-primary/10': 'hsl(var(--primary))',
-      'bg-warning/10': 'hsl(var(--warning))',
-      'bg-success/10': 'hsl(var(--success))',
-      'bg-destructive/10': 'hsl(var(--destructive))',
-      'bg-blue-500/10': 'hsl(217, 91%, 60%)',
-      'bg-purple-500/10': 'hsl(271, 81%, 56%)',
-      'bg-pink-500/10': 'hsl(330, 81%, 60%)',
-    };
-    return colorMap[colorClass] || 'hsl(var(--primary))';
-  };
+  // Vibrant color palette with distinct colors for clear UI
+  const distinctColors = [
+    'hsl(217, 91%, 60%)',  // Blue
+    'hsl(142, 71%, 45%)',  // Green
+    'hsl(45, 93%, 47%)',   // Yellow
+    'hsl(271, 81%, 56%)',  // Purple
+    'hsl(0, 84%, 60%)',    // Red
+    'hsl(168, 76%, 42%)',  // Teal
+    'hsl(330, 81%, 60%)',  // Pink
+    'hsl(24, 95%, 53%)',   // Orange
+    'hsl(262, 52%, 47%)',  // Indigo
+    'hsl(141, 79%, 85%)',  // Mint
+    'hsl(14, 100%, 57%)',  // Coral
+    'hsl(193, 82%, 31%)',  // Cyan
+    'hsl(291, 64%, 42%)',  // Magenta
+    'hsl(84, 81%, 44%)',   // Lime
+    'hsl(51, 100%, 50%)',  // Gold
+    'hsl(199, 89%, 48%)',  // Sky Blue
+    'hsl(348, 83%, 47%)',  // Rose
+    'hsl(162, 63%, 41%)',  // Emerald
+    'hsl(43, 96%, 56%)',   // Amber
+    'hsl(280, 67%, 50%)',  // Violet
+  ];
 
-  const statusData = columns.map(column => ({
+  const statusData = columns.map((column, index) => ({
     name: column.title,
     value: tasks.filter(t => t.status === column.id).length,
-    fill: getColorValue(column.color),
+    fill: distinctColors[index % distinctColors.length],
   }));
 
   const priorityData = [
