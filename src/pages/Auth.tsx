@@ -48,11 +48,17 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4">
-      <div className="w-full max-w-md animate-scale-in">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-primary/10 p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+      
+      <div className="w-full max-w-md animate-scale-in relative z-10">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
               <CheckSquare className="h-7 w-7 text-white" />
             </div>
           </div>
@@ -65,13 +71,13 @@ const Auth = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'signup')} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-4">
+          <TabsList className="grid w-full grid-cols-2 mb-4 backdrop-blur-xl bg-card/50 border border-border/20">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login">
-            <Card>
+            <Card className="backdrop-blur-xl bg-card/70 border-border/20 shadow-glass">
               <form onSubmit={handleLogin}>
                 <CardHeader>
                   <CardTitle>Login to your account</CardTitle>
@@ -120,7 +126,7 @@ const Auth = () => {
           </TabsContent>
 
           <TabsContent value="signup">
-            <Card>
+            <Card className="backdrop-blur-xl bg-card/70 border-border/20 shadow-glass">
               <form onSubmit={handleSignup}>
                 <CardHeader>
                   <CardTitle>Create an account</CardTitle>
